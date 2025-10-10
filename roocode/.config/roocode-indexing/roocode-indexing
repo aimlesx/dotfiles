@@ -1,0 +1,81 @@
+#!/usr/bin/env sh
+set -eu
+
+# Resolve the absolute path to this script, following symlinks (portable)
+path_exe=$0
+case "$path_exe" in
+  /*|./*|../*) ;;
+  *) path_exe=$(command -v -- "$path_exe" 2>/dev/null || printf %s "$path_exe") ;;
+esac
+while [ -L "$path_exe" ]; do
+  link_target=$(readlink "$path_exe")
+  case "$link_target" in
+    /*) path_exe="$link_target" ;;
+    *) path_exe="$(cd -P "$(dirname "$path_exe")" 2>/dev/null && pwd)/$link_target" ;;
+  esac
+done
+script_dir=$(cd -P "$(dirname "$path_exe")" 2>/dev/null && pwd)
+
+# Pick a compose file (either compose.yaml or docker-compose.yml) next to this script
+compose_file="$script_dir/compose.yaml"
+if [ ! -f "$compose_file" ]; then
+  if [ -f "$script_dir/docker-compose.yml" ]; then
+    compose_file="$script_dir/docker-compose.yml"
+  else
+    echo "Error: No compose file found in $script_dir (expected compose.yaml or docker-compose.yml)." >&2
+    exit 1
+  fi
+fi
+
+# Decide which compose command to use (prefer docker compose v2, fallback to docker-compose v1)
+choose_compose() {
+  if command -v docker >/dev/null 2>&1; then
+    if docker compose version >/dev/null 2>&1; then
+      printf %s "docker compose"
+      return 0
+    fi
+  fi
+  if command -v docker-compose >/dev/null 2>&1; then
+    printf %s "docker-compose"
+    return 0
+  fi
+  return 1
+}
+
+COMPOSE_CMD=$(choose_compose) || {
+  echo "Error: Docker Compose is required (either 'docker compose' or 'docker-compose')." >&2
+  exit 1
+}
+
+# Use sudo if needed for Docker access
+SUDO_PREFIX=""
+if ! docker info >/dev/null 2>&1; then
+  if command -v sudo >/dev/null 2>&1; then
+    SUDO_PREFIX="sudo "
+  fi
+fi
+
+COMPOSE="${SUDO_PREFIX}${COMPOSE_CMD}"
+
+start() {
+  # Always point compose at the file by absolute path
+  $COMPOSE -f "$compose_file" up -d
+}
+
+stop() {
+  # Stops containers without removing them/volumes. If you prefer full teardown, change to 'down'.
+  $COMPOSE -f "$compose_file" stop
+}
+
+usage() {
+  echo "Usage: roocode-indexing {start|stop}"
+}
+
+cmd=${1:-}
+case "$cmd" in
+  start) start ;;
+  stop)  stop ;;
+  ""|help|-h|--help) usage ;;
+  *) echo "Unknown command: $cmd" >&2; usage; exit 2 ;;
+esac
+
