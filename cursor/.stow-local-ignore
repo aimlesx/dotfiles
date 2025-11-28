@@ -1,0 +1,56 @@
+# Stow ignore file for Cursor module
+# Standard stow ignores (must include since .stow-local-ignore replaces defaults)
+RCS
+.+,v
+CVS
+\.\#.+
+\.cvsignore
+\.svn
+_darcs
+\.hg
+\.git
+\.gitignore
+\.gitmodules
+\.stow-local-ignore
+^/README.*
+^/LICENSE.*
+^/COPYING
+
+# Cursor-specific ignores - caches and temporary data
+\.config/Cursor/Backups
+\.config/Cursor/Cache
+\.config/Cursor/CachedData
+\.config/Cursor/CachedExtensionVSIXs
+\.config/Cursor/CachedProfilesData
+\.config/Cursor/Code\ Cache
+\.config/Cursor/GPUCache
+\.config/Cursor/DawnGraphiteCache
+\.config/Cursor/DawnWebGPUCache
+\.config/Cursor/blob_storage
+\.config/Cursor/Crashpad
+\.config/Cursor/Dictionaries
+\.config/Cursor/Local\ Storage
+\.config/Cursor/Session\ Storage
+\.config/Cursor/Shared\ Dictionary
+\.config/Cursor/Partitions
+\.config/Cursor/logs
+\.config/Cursor/process-monitor
+\.config/Cursor/sentry
+
+# Database and state files
+\.config/Cursor/Cookies.*
+\.config/Cursor/DIPS.*
+\.config/Cursor/SharedStorage.*
+\.config/Cursor/Trust\ Tokens.*
+\.config/Cursor/Network\ Persistent\ State
+\.config/Cursor/TransportSecurity
+\.config/Cursor/Preferences
+\.config/Cursor/languagepacks\.json
+\.config/Cursor/machineid
+\.config/Cursor/code\.lock
+
+# User data that shouldn't be symlinked
+\.config/Cursor/User/globalStorage
+\.config/Cursor/User/History
+\.config/Cursor/User/workspaceStorage
+

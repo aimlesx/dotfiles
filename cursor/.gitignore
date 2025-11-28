@@ -1,0 +1,15 @@
+# Cursor IDE - ignore everything except User config files
+# This uses a whitelist approach: ignore all, then selectively unignore
+
+# Ignore everything in .config/Cursor
+.config/Cursor/*
+
+# Unignore User directory structure
+!.config/Cursor/User/
+.config/Cursor/User/*
+
+# Keep only these User files
+!.config/Cursor/User/settings.json
+!.config/Cursor/User/keybindings.json
+!.config/Cursor/User/snippets/
+
