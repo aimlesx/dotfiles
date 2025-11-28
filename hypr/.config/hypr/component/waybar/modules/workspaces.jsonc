@@ -1,0 +1,8 @@
+{
+    "hyprland/workspaces": {
+        "format": "",
+        "format-active": "",
+        "on-click": "activate"
+    }
+}
+

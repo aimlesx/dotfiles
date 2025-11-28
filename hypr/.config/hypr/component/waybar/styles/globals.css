@@ -1,0 +1,26 @@
+@import "variables.css";
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font Mono", sans-serif;
+  font-size: 14px;
+  border-radius: 0;
+  border: none;
+}
+
+#clock,
+#cpu,
+#memory,
+#disk,
+#network,
+#pulseaudio,
+#tray,
+#mpd,
+#workspaces,
+#custom-os-logo {
+  margin-top: 12px;
+  margin-right: 12px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: transparent;
+  color: @primary;
+}

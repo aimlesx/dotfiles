@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+pkill -x hyprpaper
+hyprpaper &
+notify-send "wallpaper set"

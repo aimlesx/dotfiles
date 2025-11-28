@@ -1,0 +1,21 @@
+{
+    "include": [
+        "~/.config/hypr/component/waybar/modules/*.jsonc"
+    ],
+
+    // OS Logo module
+    "custom/os-logo": {
+        "format": "",
+        "tooltip": false
+    },
+
+    // Bar configuration
+    "layer": "top",
+    "position": "top",
+    "spacing": 5,
+    "margin-bottom": 0,
+
+    // Module layout
+    "modules-left": ["custom/os-logo", "hyprland/workspaces"],
+    "modules-right": ["tray", "pulseaudio", "clock"]
+}
