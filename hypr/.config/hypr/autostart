@@ -4,6 +4,19 @@
 config=$HOME/.config/hypr
 scripts=$config/scripts
 
+# Initialize gnome-keyring and capture its environment output
+eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK GNOME_KEYRING_CONTROL
+
+# Propagate all necessary environment variables to systemd/D-Bus user session
+# This ensures apps launched from .desktop files or launchers can access the keyring
+dbus-update-activation-environment --systemd \
+    WAYLAND_DISPLAY \
+    XDG_CURRENT_DESKTOP \
+    GNOME_KEYRING_CONTROL \
+    SSH_AUTH_SOCK \
+    DISPLAY
+
 # notification daemon
 dunst &
 
@@ -19,6 +32,4 @@ pkill -x hyprpaper && hyprpaper &
 
 # other
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-gnome-keyring-daemon --start --components=secrets &
-dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
 notify-send -a aurora "hello $(whoami)" &
