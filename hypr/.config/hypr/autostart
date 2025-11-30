@@ -20,6 +20,9 @@ dbus-update-activation-environment --systemd \
 # notification daemon
 dunst &
 
+# wob - overlay bar
+$scripts/launch_wob &
+
 # waybar
 # $scripts/launch_waybar &
 # $scripts/tools/dynamic &
