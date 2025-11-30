@@ -1,7 +1,14 @@
 {
-    "include": [
-        "~/.config/hypr/component/waybar/modules/*.jsonc"
-    ],
+    // Bar configuration
+    "layer": "top",
+    "position": "top",
+    "output": "DP-1",
+    "spacing": 5,
+    "margin-bottom": -6,
+
+    // Module layout
+    "modules-left": ["custom/os-logo", "hyprland/workspaces"],
+    "modules-right": ["tray", "pulseaudio", "clock"],
 
     // OS Logo module
     "custom/os-logo": {
@@ -9,13 +16,42 @@
         "tooltip": false
     },
 
-    // Bar configuration
-    "layer": "top",
-    "position": "top",
-    "spacing": 5,
-    "margin-bottom": 0,
+    // Workspaces
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate"
+    },
 
-    // Module layout
-    "modules-left": ["custom/os-logo", "hyprland/workspaces"],
-    "modules-right": ["tray", "pulseaudio", "clock"]
+    // Tray
+    "tray": {
+        "spacing": 10
+    },
+
+    // Pulseaudio
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-bluetooth": "{icon}",
+        "format-bluetooth-muted": "󰝟",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "tooltip-format": "{volume}%"
+    },
+
+    // Clock
+    "clock": {
+        "timezone": "Europe/Warsaw",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "interval": 60,
+        "format": "󰥔 {:%I:%M}",
+        "max-length": 25
+    }
 }

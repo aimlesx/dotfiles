@@ -32,7 +32,7 @@ window#waybar {
 }
 
 #workspaces button label {
-  font-size: 10px;
+  font-size: 14px;
   padding-top: 2px;
   transition: all 0.15s ease-in-out;
 }
@@ -56,7 +56,7 @@ window#waybar {
 }
 
 #workspaces button.active label {
-  font-size: 10px;
+  font-size: 14px;
 }
 
 #workspaces button:hover {
