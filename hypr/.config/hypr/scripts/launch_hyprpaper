@@ -1,4 +1,19 @@
 #!/usr/bin/bash
+
+# Find wallpaper file (any common image extension)
+WALLPAPER=$(find ~/.config -maxdepth 1 -name 'wallpaper.*' \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' \) | head -1)
+
+if [[ -z "$WALLPAPER" ]]; then
+    notify-send "hyprpaper" "No wallpaper found at ~/.config/wallpaper.*"
+    exit 1
+fi
+
+# Generate hyprpaper config
+cat > ~/.config/hypr/hyprpaper.conf << EOF
+preload = $WALLPAPER
+wallpaper = ,$WALLPAPER
+EOF
+
 pkill -x hyprpaper
 hyprpaper &
-notify-send "wallpaper set"
+notify-send "Wallpaper set" "$(basename "$WALLPAPER")"
