@@ -27,14 +27,29 @@ if [ ! -f "$compose_file" ]; then
   fi
 fi
 
-# Decide which compose command to use (prefer docker compose v2, fallback to docker-compose v1)
+# Decide which compose command to use (prefer podman, fallback to docker)
 choose_compose() {
+  # Prefer podman if available
+  if command -v podman >/dev/null 2>&1; then
+    # Check for podman compose plugin (v2 style)
+    if podman compose version >/dev/null 2>&1; then
+      printf %s "podman compose"
+      return 0
+    fi
+    # Check for standalone podman-compose
+    if command -v podman-compose >/dev/null 2>&1; then
+      printf %s "podman-compose"
+      return 0
+    fi
+  fi
+  # Fallback to docker compose v2
   if command -v docker >/dev/null 2>&1; then
     if docker compose version >/dev/null 2>&1; then
       printf %s "docker compose"
       return 0
     fi
   fi
+  # Fallback to docker-compose v1
   if command -v docker-compose >/dev/null 2>&1; then
     printf %s "docker-compose"
     return 0
@@ -43,17 +58,21 @@ choose_compose() {
 }
 
 COMPOSE_CMD=$(choose_compose) || {
-  echo "Error: Docker Compose is required (either 'docker compose' or 'docker-compose')." >&2
+  echo "Error: A compose tool is required (podman compose, podman-compose, docker compose, or docker-compose)." >&2
   exit 1
 }
 
-# Use sudo if needed for Docker access
+# Use sudo if needed for Docker access (podman typically runs rootless)
 SUDO_PREFIX=""
-if ! docker info >/dev/null 2>&1; then
-  if command -v sudo >/dev/null 2>&1; then
-    SUDO_PREFIX="sudo "
-  fi
-fi
+case "$COMPOSE_CMD" in
+  docker*)
+    if ! docker info >/dev/null 2>&1; then
+      if command -v sudo >/dev/null 2>&1; then
+        SUDO_PREFIX="sudo "
+      fi
+    fi
+    ;;
+esac
 
 COMPOSE="${SUDO_PREFIX}${COMPOSE_CMD}"
 
