@@ -1,0 +1,184 @@
+# macOS-inspired Dunst Configuration
+# Styled to match the system's dark green theme (waybar, wofi)
+
+[global]
+    ### Display ###
+    monitor = 0
+    follow = mouse
+
+    ### Geometry - macOS Style ###
+    # Wider notifications like macOS
+    width = (300, 380)
+    
+    # Generous height for content
+    height = 120
+    
+    # macOS positions notifications in top-right
+    origin = top-right
+    
+    # Comfortable offset from screen edge
+    offset = 16x16
+    
+    scale = 0
+    notification_limit = 3
+
+    ### Progress bar ###
+    progress_bar = true
+    progress_bar_height = 6
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 200
+    progress_bar_max_width = 340
+    progress_bar_corner_radius = 3
+
+    indicate_hidden = yes
+    
+    # Transparency (0 = opaque, set via background color alpha)
+    transparency = 0
+
+    # No separator line - macOS uses gaps
+    separator_height = 0
+
+    # Generous padding like macOS
+    padding = 16
+    horizontal_padding = 20
+    text_icon_padding = 16
+
+    # Minimal/no frame for cleaner look
+    frame_width = 0
+
+    # Gap between notifications (macOS style spacing)
+    gap_size = 10
+
+    separator_color = frame
+    sort = yes
+
+    ### Text ###
+    # Clean sans-serif (Ubuntu has Apple-like aesthetic)
+    font = Ubuntu 13
+
+    line_height = 4
+
+    markup = full
+    
+    # Clean format with app name
+    format = "<b>%s</b>\n<span size='small' alpha='80%%'>%b</span>"
+
+    alignment = left
+    vertical_alignment = center
+
+    show_age_threshold = 60
+    ellipsize = end
+    ignore_newline = no
+
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = no
+
+    ### Icons ###
+    icon_position = left
+    min_icon_size = 48
+    max_icon_size = 64
+    
+    icon_path = /usr/share/icons/Papirus/64x64/apps:/usr/share/icons/Papirus/64x64/devices:/usr/share/icons/Papirus/64x64/status:/usr/share/icons/gnome/64x64/status:/usr/share/icons/gnome/64x64/devices
+    icon_theme = "Papirus, Adwaita"
+    enable_recursive_icon_lookup = true
+
+    ### History ###
+    sticky_history = yes
+    history_length = 20
+
+    ### Misc/Advanced ###
+    dmenu = /usr/bin/wofi --dmenu -p dunst:
+    browser = /usr/bin/xdg-open
+    always_run_script = true
+
+    title = Dunst
+    class = Dunst
+
+    # Rounded corners like macOS (16px radius)
+    corner_radius = 16
+
+    ignore_dbusclose = false
+
+    ### Wayland ###
+    layer = overlay
+    force_xwayland = false
+
+    ### Legacy ###
+    force_xinerama = false
+
+    ### Mouse ###
+    mouse_left_click = close_current
+    mouse_middle_click = context
+    mouse_right_click = do_action
+
+[experimental]
+    per_monitor_dpi = false
+
+# =============================================================================
+# URGENCY LEVELS - Dark Green Theme (matching waybar/wofi)
+# =============================================================================
+
+[urgency_low]
+    # Semi-transparent dark green background
+    background = "#141e18e6"
+    foreground = "#d4e4d8"
+    highlight = "#5a9d6f"
+    timeout = 4
+    script = ~/.scripts/dunst/sound-normal.sh
+
+[urgency_normal]
+    # Slightly more opaque for normal notifications
+    background = "#141e18f0"
+    foreground = "#d4e4d8"
+    highlight = "#5a9d6f"
+    timeout = 5
+    script = ~/.scripts/dunst/sound-normal.sh
+
+[urgency_critical]
+    # Full opacity with accent border for critical
+    background = "#1a2520"
+    foreground = "#d4e4d8"
+    frame_color = "#8a4a4a"
+    highlight = "#8a4a4a"
+    timeout = 0
+    script = ~/.scripts/dunst/sound-critical.sh
+
+# =============================================================================
+# CUSTOM RULES
+# =============================================================================
+
+# Styled progress bar for volume/brightness
+[progress]
+    summary = "*"
+    set_stack_tag = "progress"
+    
+[redirect]
+    summary = "*"
+    script = "~/.config/hypr/scripts/tools/notif"
+
+[logger]
+    summary = "*"
+    script = "~/.config/hypr/scripts/tools/notif"
+
+[spotify]
+    summary = "*"
+    script = "~/.scripts/music-art"
+
+[spotify-icon]
+    appname = "Spotify"
+    icon = "~/.cache/temp.png"
+    # Give Spotify notifications a slightly different feel
+    background = "#141e18f5"
+    timeout = 4
+
+# Discord style
+[discord]
+    appname = "discord"
+    timeout = 6
+
+# Screenshot notifications
+[screenshot]
+    appname = "Screenshot"
+    timeout = 3
+    history_ignore = yes
