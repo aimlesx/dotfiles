@@ -11,9 +11,6 @@
   home.packages = with pkgs; [
     # Modern CLI tools
     fd              # Better find
-    fzf             # Fuzzy finder
-    bat             # Better cat with syntax highlighting
-    eza             # Modern ls replacement
     htop            # Interactive process viewer
     lazygit         # Git TUI
     delta           # Better git diff
@@ -33,6 +30,37 @@
     # Keep test package for now
     cowsay
   ];
+
+  # Native program modules (with shell integration)
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "Catppuccin-mocha";
+    };
+  };
+
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+    icons = "auto";
+    git = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   # Config files (migrated from stow)
   home.file = {
