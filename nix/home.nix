@@ -193,6 +193,15 @@
     '';
   };
 
+  # Neovim (native module with Lazy.nvim config)
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+  };
+
   # Config files (migrated from stow)
   home.file = {
     ".config/starship.toml".source = ./configs/starship.toml;
@@ -217,6 +226,12 @@
     ".config/code-flags.conf".source = ./configs/code-flags.conf;
     ".config/codium-flags.conf".source = ./configs/codium-flags.conf;
     ".config/chrome-flags.conf".source = ./configs/chrome-flags.conf;
+
+    # Neovim config (Lazy.nvim managed)
+    ".config/nvim" = {
+      source = ./configs/nvim;
+      recursive = true;
+    };
   };
 }
 
