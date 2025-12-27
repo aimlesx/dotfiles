@@ -27,8 +27,6 @@
     tree            # Directory tree view
     unzip           # Archive extraction
 
-    # Keep test package for now
-    cowsay
   ];
 
   # Native program modules (with shell integration)
