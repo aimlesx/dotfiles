@@ -9,6 +9,7 @@
     ./modules/editor.nix
     ./modules/desktop.nix
     ./modules/zsh.nix
+    ./modules/theming.nix
   ];
 
   home.username = "aimless";
