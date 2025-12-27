@@ -1,0 +1,76 @@
+@import "variables.css";
+
+#clock {
+  padding: 2px 16px;
+  color: @primary;
+  font-weight: bolder;
+  font-size: 15px;
+}
+
+@keyframes blink {
+  to {
+    background-color: #f9e2af;
+    color: #96804e;
+  }
+}
+
+#memory {
+  background: transparent;
+  color: @primary;
+  font-weight: bolder;
+}
+
+#disk {
+  color: #964b00;
+}
+
+#network {
+  color: #000;
+}
+
+#network.disabled {
+  color: @dark-bg;
+}
+
+#network.disconnected {
+  color: @error;
+  font-weight: bolder;
+}
+
+#network.linked,
+#network.wifi {
+  color: @accent;
+}
+
+#network.ethernet {
+  color: @primary;
+}
+
+#pulseaudio {
+  font-size: 20px;
+  color: @primary;
+}
+
+#pulseaudio.muted {
+  color: @dark-bg;
+}
+
+#custom-media {
+  color: @primary;
+}
+
+#custom-media.custom-spotify {
+  color: @accent;
+}
+
+#custom-media.custom-vlc {
+  color: @warning;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}

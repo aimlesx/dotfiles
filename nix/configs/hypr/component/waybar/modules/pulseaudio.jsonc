@@ -1,0 +1,19 @@
+{
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-bluetooth": "{icon}",
+        "format-bluetooth-muted": "󰝟",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "tooltip-format": "{volume}%"
+    }
+}
