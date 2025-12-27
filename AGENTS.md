@@ -12,7 +12,15 @@ The active configuration is in `nix/`. Legacy stow packages remain in top-level 
 nix/
 ├── flake.nix       # Flake inputs (nixpkgs, home-manager)
 ├── flake.lock      # Pinned versions
-├── home.nix        # Main configuration
+├── home.nix        # Main configuration (imports modules)
+├── modules/        # Modular configuration
+│   ├── cli.nix     # CLI tools and packages
+│   ├── shell.nix   # fzf, bat, eza, direnv, starship
+│   ├── terminal.nix # Kitty configuration
+│   ├── editor.nix  # Neovim configuration
+│   ├── desktop.nix # Hypr, Rofi, Dunst configs
+│   ├── zsh.nix     # Zsh shell with Oh-My-Zsh
+│   └── theming.nix # GTK, Qt, Kvantum, Wofi, XDG
 └── configs/        # Config files (symlinked via home.file)
 ```
 
@@ -37,6 +45,13 @@ These are now managed by Home Manager:
 | `nvim` | programs.neovim + home.file | `nix/configs/nvim/` |
 | `rofi` | home.file | `nix/configs/rofi/` |
 | `starship` | programs.starship + home.file | `nix/configs/starship.toml` |
+| `zsh` | programs.zsh | Native module with Oh-My-Zsh |
+| `gtk` | home.file | `nix/configs/gtk-4.0/` |
+| `kvantum` | home.file | `nix/configs/Kvantum/` |
+| `qt` | home.file | `nix/configs/qt5ct/`, `qt6ct/` |
+| `wofi` | home.file | `nix/configs/wofi/` |
+| `mimeapps` | xdg.mimeApps | Native module |
+| `user-dirs` | xdg.userDirs | Native module |
 
 ## Native Program Modules
 
@@ -49,6 +64,9 @@ These use Home Manager's native modules with shell integration:
 - `programs.starship` - Shell prompt
 - `programs.kitty` - Terminal (Tokyo Night theme)
 - `programs.neovim` - Editor (default $EDITOR)
+- `programs.zsh` - Shell with Oh-My-Zsh integration
+- `xdg.mimeApps` - Default applications
+- `xdg.userDirs` - XDG user directories
 
 ## Legacy Stow Packages (Not Migrated)
 
@@ -57,22 +75,15 @@ These remain as stow packages and are NOT actively deployed:
 | Package | Description |
 |---------|-------------|
 | `cursor` | Cursor IDE settings |
-| `gtk` | GTK theming |
-| `htop` | Process viewer |
-| `kvantum` | Qt theme engine |
+| `htop` | Process viewer (using btop instead) |
 | `libfm` | File manager library |
-| `mimeapps` | Default applications |
 | `nwg-wrapper` | Wayland widget wrapper |
 | `pcmanfm-qt` | File manager |
 | `profile.d` | Shell profile scripts |
-| `qt` | Qt settings |
 | `roocode` | Roo Code extension |
 | `sworkstyle` | Workspace icons/styling |
-| `user-dirs` | XDG user directories |
 | `vscode` | VS Code settings |
 | `wob` | Wayland overlay bar |
-| `wofi` | Wayland launcher |
-| `zsh` | Zsh shell config (Oh-My-Zsh) |
 
 ## Legacy Stow Usage
 

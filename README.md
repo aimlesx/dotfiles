@@ -4,16 +4,12 @@ Personal configuration files for a Hyprland-based Linux desktop environment.
 
 ## Configuration Management
 
-This repository uses **two configuration systems** during migration:
+This repository is **fully managed by Nix Home Manager**. Legacy Stow packages have been migrated.
 
 | System | Status | Location |
 |--------|--------|----------|
 | **Nix Home Manager** | Primary (active) | `nix/` |
 | **GNU Stow** | Legacy (deprecated) | Top-level directories |
-
-### Current Setup
-
-The active configuration is managed by [Nix Home Manager](https://github.com/nix-community/home-manager) with flakes. Legacy Stow packages remain in the repository but are no longer deployed.
 
 ## Quick Start
 
@@ -45,7 +41,15 @@ The primary configuration lives in `nix/`:
 nix/
 ├── flake.nix           # Flake definition (inputs: nixpkgs, home-manager)
 ├── flake.lock          # Pinned versions
-├── home.nix            # Home Manager configuration
+├── home.nix            # Home Manager configuration (imports modules)
+├── modules/            # Modular configuration
+│   ├── cli.nix         # CLI tools and packages
+│   ├── shell.nix       # fzf, bat, eza, direnv, starship
+│   ├── terminal.nix    # Kitty terminal
+│   ├── editor.nix      # Neovim
+│   ├── desktop.nix     # Hyprland, Rofi, Dunst
+│   ├── zsh.nix         # Zsh with Oh-My-Zsh
+│   └── theming.nix     # GTK, Qt, Kvantum, Wofi, XDG
 └── configs/            # Config files managed by home.file
     ├── btop.conf
     ├── dunstrc
@@ -53,7 +57,12 @@ nix/
     ├── starship.toml
     ├── hypr/           # Hyprland + Waybar + scripts
     ├── nvim/           # Neovim + Lazy.nvim
-    └── rofi/
+    ├── rofi/           # Application launcher
+    ├── wofi/           # Wayland launcher
+    ├── gtk-4.0/        # GTK CSS
+    ├── Kvantum/        # Qt theme
+    ├── qt5ct/          # Qt5 settings
+    └── qt6ct/          # Qt6 settings
 ```
 
 ### Programs (Native Modules)
@@ -69,6 +78,7 @@ These programs are fully managed by Home Manager with shell integration:
 | `starship` | Shell prompt | Auto-initialized |
 | `kitty` | Terminal | Tokyo Night theme |
 | `neovim` | Editor | Default $EDITOR |
+| `zsh` | Shell | Oh-My-Zsh with plugins |
 
 ### Packages
 
@@ -90,6 +100,15 @@ Configurations managed via `home.file` (symlinked to Nix store):
 | Hyprland | `configs/hypr/` | Compositor + Waybar + scripts |
 | Neovim | `configs/nvim/` | Lazy.nvim plugin manager |
 | Rofi | `configs/rofi/` | Application launcher |
+| Wofi | `configs/wofi/` | Wayland launcher |
+| GTK | `configs/gtk-4.0/` | GTK4 CSS theming |
+| Kvantum | `configs/Kvantum/` | Qt theme engine |
+| Qt | `configs/qt5ct/`, `qt6ct/` | Qt settings |
+
+### XDG (Native Modules)
+
+- `xdg.mimeApps` - Default applications (Zen Browser)
+- `xdg.userDirs` - XDG directories (Desktop, Documents, etc.)
 
 ## Desktop Environment
 
@@ -136,26 +155,32 @@ Lazy.nvim-managed configuration with 20+ plugins:
 
 Plugin lockfile: `configs/nvim/lazy-lock.json`
 
+## Shell (Zsh)
+
+Managed by `programs.zsh` with:
+
+- **Oh-My-Zsh**: Plugins (git, docker, kubectl, gh, gpg-agent)
+- **zsh-fzf-tab**: Fuzzy completion via Nix
+- **Autosuggestions**: Native module
+- **Syntax highlighting**: Native module
+- **Starship**: Prompt integration
+
 ## Legacy Stow Packages
 
-These directories are **no longer deployed** but kept for reference:
+These directories are **no longer deployed** and kept for reference only:
 
 | Package | Status | Notes |
 |---------|--------|-------|
-| `btop/` | Migrated | → `nix/configs/btop.conf` |
-| `dunst/` | Migrated | → `nix/configs/dunstrc` |
-| `fastfetch/` | Migrated | → `nix/configs/fastfetch.jsonc` |
-| `hypr/` | Migrated | → `nix/configs/hypr/` |
-| `kitty/` | Migrated | → `programs.kitty` in home.nix |
-| `nvim/` | Migrated | → `nix/configs/nvim/` |
-| `rofi/` | Migrated | → `nix/configs/rofi/` |
-| `starship/` | Migrated | → `nix/configs/starship.toml` |
-| `cursor/` | Not migrated | IDE settings |
-| `gtk/` | Not migrated | GTK theming |
-| `kvantum/` | Not migrated | Qt theming |
+| `cursor/` | Not migrated | IDE settings (not in nixpkgs) |
+| `htop/` | Deprecated | Using btop instead |
+| `libfm/` | Not migrated | File manager library |
+| `nwg-wrapper/` | Not migrated | Wayland widget |
+| `pcmanfm-qt/` | Not migrated | File manager |
+| `profile.d/` | Not migrated | Shell profiles |
+| `roocode/` | Not migrated | AI extension config |
+| `sworkstyle/` | Not migrated | Old workspace setup |
 | `vscode/` | Not migrated | VS Code settings |
-| `wofi/` | Not migrated | Wayland launcher |
-| `zsh/` | Not migrated | Shell config (uses Oh-My-Zsh) |
+| `wob/` | Deprecated | Using Waybar instead |
 
 ### Using Legacy Stow
 
@@ -199,13 +224,18 @@ After deployment, configs are symlinked:
 ├── kitty/       → /nix/store/.../kitty/
 ├── nvim/        → /nix/store/.../nvim/
 ├── rofi/        → /nix/store/.../rofi/
+├── wofi/        → /nix/store/.../wofi/
 ├── btop/        → /nix/store/.../btop/
 ├── dunst/       → /nix/store/.../dunst/
 ├── fastfetch/   → /nix/store/.../fastfetch/
+├── gtk-4.0/     → /nix/store/.../gtk-4.0/
+├── Kvantum/     → /nix/store/.../Kvantum/
+├── qt5ct/       → /nix/store/.../qt5ct/
+├── qt6ct/       → /nix/store/.../qt6ct/
+├── zsh/         → /nix/store/.../zsh/
 └── starship.toml → /nix/store/.../starship.toml
 ```
 
 ## License
 
 Personal configuration - use at your own discretion.
-
