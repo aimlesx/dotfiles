@@ -11,6 +11,7 @@
     ./modules/zsh.nix
     ./modules/theming.nix
     ./modules/ide.nix
+    ./modules/git.nix
   ];
 
   home.username = "aimless";
