@@ -6,11 +6,6 @@ Personal configuration files for a Hyprland-based Linux desktop environment.
 
 This repository is **fully managed by Nix Home Manager**. Legacy Stow packages have been migrated.
 
-| System | Status | Location |
-|--------|--------|----------|
-| **Nix Home Manager** | Primary (active) | `nix/` |
-| **GNU Stow** | Legacy (deprecated) | Top-level directories |
-
 ## Quick Start
 
 ### Prerequisites
@@ -49,25 +44,13 @@ nix/
 │   ├── editor.nix      # Neovim
 │   ├── desktop.nix     # Hyprland, Rofi, Dunst
 │   ├── zsh.nix         # Zsh with Oh-My-Zsh
-│   └── theming.nix     # GTK, Qt, Kvantum, Wofi, XDG
+│   ├── theming.nix     # GTK, Qt, Kvantum, Wofi, XDG
+│   ├── ide.nix         # Cursor, VS Code, Roocode
+│   └── git.nix         # Git, SSH, GPG
 └── configs/            # Config files managed by home.file
-    ├── btop.conf
-    ├── dunstrc
-    ├── fastfetch.jsonc
-    ├── starship.toml
-    ├── hypr/           # Hyprland + Waybar + scripts
-    ├── nvim/           # Neovim + Lazy.nvim
-    ├── rofi/           # Application launcher
-    ├── wofi/           # Wayland launcher
-    ├── gtk-4.0/        # GTK CSS
-    ├── Kvantum/        # Qt theme
-    ├── qt5ct/          # Qt5 settings
-    └── qt6ct/          # Qt6 settings
 ```
 
 ### Programs (Native Modules)
-
-These programs are fully managed by Home Manager with shell integration:
 
 | Program | Description | Shell Integration |
 |---------|-------------|-------------------|
@@ -79,6 +62,10 @@ These programs are fully managed by Home Manager with shell integration:
 | `kitty` | Terminal | Tokyo Night theme |
 | `neovim` | Editor | Default $EDITOR |
 | `zsh` | Shell | Oh-My-Zsh with plugins |
+| `git` | Version control | Delta integration, GPG signing |
+| `ssh` | SSH client | GitHub/GitLab hosts configured |
+| `gpg` | GPG | pinentry-gnome3, gpg-agent |
+| `delta` | Git pager | Side-by-side diffs |
 
 ### Packages
 
@@ -89,21 +76,24 @@ CLI tools installed via `home.packages`:
 
 ### Config Files
 
-Configurations managed via `home.file` (symlinked to Nix store):
+Configurations managed via `home.file`:
 
 | Config | Source | Notes |
 |--------|--------|-------|
-| Starship | `configs/starship.toml` | Custom prompt with Nerd Font icons |
+| Starship | `configs/starship.toml` | Custom prompt |
 | btop | `configs/btop.conf` | System monitor |
 | Dunst | `configs/dunstrc` | Notification daemon |
 | Fastfetch | `configs/fastfetch.jsonc` | System info |
-| Hyprland | `configs/hypr/` | Compositor + Waybar + scripts |
-| Neovim | `configs/nvim/` | Lazy.nvim plugin manager |
+| Hyprland | `configs/hypr/` | Compositor + Waybar |
+| Neovim | `configs/nvim/` | Lazy.nvim plugins |
 | Rofi | `configs/rofi/` | Application launcher |
 | Wofi | `configs/wofi/` | Wayland launcher |
 | GTK | `configs/gtk-4.0/` | GTK4 CSS theming |
 | Kvantum | `configs/Kvantum/` | Qt theme engine |
 | Qt | `configs/qt5ct/`, `qt6ct/` | Qt settings |
+| Cursor | `configs/cursor/` | IDE settings |
+| VS Code | `configs/vscode/` | IDE settings |
+| Roocode | `configs/roocode/` | AI rules |
 
 ### XDG (Native Modules)
 
@@ -114,7 +104,7 @@ Configurations managed via `home.file` (symlinked to Nix store):
 
 ### Hyprland
 
-- **Monitors**: Dual 1440p setup (Gigabyte G32QC + ASUS XG27UCG)
+- **Monitors**: Dual 1440p setup
 - **Workspaces**: 1-5 on main, 6-10 on secondary
 - **Key bindings**: Super as mod key
 
@@ -124,23 +114,13 @@ Configurations managed via `home.file` (symlinked to Nix store):
 | `Super + Q` | Close window |
 | `Super + X` | Open Wofi |
 | `Super + 1-0` | Switch workspace |
-| `Super + Shift + 1-0` | Move to workspace |
 | `Print` | Screenshot |
-
-### Waybar
-
-Modular configuration in `configs/hypr/component/waybar/`:
-
-- Workspaces, clock, system stats, media controls
-- Network, pulseaudio, tray
-- Custom styling with CSS variables
 
 ### Kitty Terminal
 
 - **Font**: JetBrainsMono Nerd Font Mono (18pt)
 - **Theme**: Tokyo Night
 - **Opacity**: 80% with blur
-- **Layout**: Splits
 
 ## Neovim
 
@@ -151,46 +131,25 @@ Lazy.nvim-managed configuration with 20+ plugins:
 - **Telescope**: Fuzzy finder
 - **Neo-tree**: File explorer
 - **Catppuccin**: Color scheme
-- **Completions**: nvim-cmp based
-
-Plugin lockfile: `configs/nvim/lazy-lock.json`
 
 ## Shell (Zsh)
 
 Managed by `programs.zsh` with:
 
 - **Oh-My-Zsh**: Plugins (git, docker, kubectl, gh, gpg-agent)
-- **zsh-fzf-tab**: Fuzzy completion via Nix
+- **zsh-fzf-tab**: Fuzzy completion
 - **Autosuggestions**: Native module
 - **Syntax highlighting**: Native module
-- **Starship**: Prompt integration
 
 ## Legacy Stow Packages
 
-These directories are **no longer deployed** and kept for reference only:
+These directories are kept for specific use cases:
 
 | Package | Status | Notes |
 |---------|--------|-------|
-| `cursor/` | Not migrated | IDE settings (not in nixpkgs) |
-| `htop/` | Deprecated | Using btop instead |
-| `libfm/` | Not migrated | File manager library |
-| `nwg-wrapper/` | Not migrated | Wayland widget |
-| `pcmanfm-qt/` | Not migrated | File manager |
-| `profile.d/` | Not migrated | Shell profiles |
-| `roocode/` | Not migrated | AI extension config |
-| `sworkstyle/` | Not migrated | Old workspace setup |
-| `vscode/` | Not migrated | VS Code settings |
-| `wob/` | Deprecated | Using Waybar instead |
-
-### Using Legacy Stow
-
-If needed, deploy a stow package:
-
-```bash
-cd ~/dotfiles
-stow <package>      # Deploy
-stow -D <package>   # Remove
-```
+| `htop/` | Active | User preference |
+| `pcmanfm-qt/` | Active | File manager settings |
+| `wob/` | Active | Volume/brightness overlay |
 
 ## Useful Commands
 
@@ -209,31 +168,6 @@ nix-collect-garbage -d
 
 # Update flake inputs
 nix flake update
-
-# Check flake
-nix flake check
-```
-
-## File Locations
-
-After deployment, configs are symlinked:
-
-```
-~/.config/
-├── hypr/        → /nix/store/.../hypr/
-├── kitty/       → /nix/store/.../kitty/
-├── nvim/        → /nix/store/.../nvim/
-├── rofi/        → /nix/store/.../rofi/
-├── wofi/        → /nix/store/.../wofi/
-├── btop/        → /nix/store/.../btop/
-├── dunst/       → /nix/store/.../dunst/
-├── fastfetch/   → /nix/store/.../fastfetch/
-├── gtk-4.0/     → /nix/store/.../gtk-4.0/
-├── Kvantum/     → /nix/store/.../Kvantum/
-├── qt5ct/       → /nix/store/.../qt5ct/
-├── qt6ct/       → /nix/store/.../qt6ct/
-├── zsh/         → /nix/store/.../zsh/
-└── starship.toml → /nix/store/.../starship.toml
 ```
 
 ## License

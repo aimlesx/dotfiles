@@ -20,7 +20,9 @@ nix/
 │   ├── editor.nix  # Neovim configuration
 │   ├── desktop.nix # Hypr, Rofi, Dunst configs
 │   ├── zsh.nix     # Zsh shell with Oh-My-Zsh
-│   └── theming.nix # GTK, Qt, Kvantum, Wofi, XDG
+│   ├── theming.nix # GTK, Qt, Kvantum, Wofi, XDG
+│   ├── ide.nix     # Cursor, VS Code, Roocode
+│   └── git.nix     # Git, SSH, GPG
 └── configs/        # Config files (symlinked via home.file)
 ```
 
@@ -52,6 +54,12 @@ These are now managed by Home Manager:
 | `wofi` | home.file | `nix/configs/wofi/` |
 | `mimeapps` | xdg.mimeApps | Native module |
 | `user-dirs` | xdg.userDirs | Native module |
+| `cursor` | home.file | `nix/configs/cursor/` |
+| `vscode` | home.file | `nix/configs/vscode/` |
+| `roocode` | home.file | `nix/configs/roocode/` |
+| `git` | programs.git | Native module |
+| `ssh` | programs.ssh | Native module |
+| `gpg` | programs.gpg + services.gpg-agent | Native module |
 
 ## Native Program Modules
 
@@ -65,25 +73,23 @@ These use Home Manager's native modules with shell integration:
 - `programs.kitty` - Terminal (Tokyo Night theme)
 - `programs.neovim` - Editor (default $EDITOR)
 - `programs.zsh` - Shell with Oh-My-Zsh integration
+- `programs.git` - Version control with GPG signing
+- `programs.delta` - Git pager with side-by-side diffs
+- `programs.ssh` - SSH client with host configurations
+- `programs.gpg` - GPG key management
+- `services.gpg-agent` - GPG agent with pinentry
 - `xdg.mimeApps` - Default applications
 - `xdg.userDirs` - XDG user directories
 
 ## Legacy Stow Packages (Not Migrated)
 
-These remain as stow packages and are NOT actively deployed:
+These remain as stow packages and are actively used:
 
 | Package | Description |
 |---------|-------------|
-| `cursor` | Cursor IDE settings |
-| `htop` | Process viewer (using btop instead) |
-| `libfm` | File manager library |
-| `nwg-wrapper` | Wayland widget wrapper |
-| `pcmanfm-qt` | File manager |
-| `profile.d` | Shell profile scripts |
-| `roocode` | Roo Code extension |
-| `sworkstyle` | Workspace icons/styling |
-| `vscode` | VS Code settings |
-| `wob` | Wayland overlay bar |
+| `htop` | Process viewer (user preference) |
+| `pcmanfm-qt` | File manager settings |
+| `wob` | Wayland overlay bar for volume/brightness |
 
 ## Legacy Stow Usage
 
