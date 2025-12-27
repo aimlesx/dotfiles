@@ -4,7 +4,7 @@ Personal configuration files for a Hyprland-based Linux desktop environment.
 
 ## Configuration Management
 
-This repository is **fully managed by Nix Home Manager**. Legacy Stow packages have been migrated.
+This repository is **fully managed by Nix Home Manager**.
 
 ## Quick Start
 
@@ -94,6 +94,9 @@ Configurations managed via `home.file`:
 | Cursor | `configs/cursor/` | IDE settings |
 | VS Code | `configs/vscode/` | IDE settings |
 | Roocode | `configs/roocode/` | AI rules |
+| htop | `configs/htoprc` | Process viewer |
+| PCManFM-Qt | `configs/pcmanfm-qt/` | File manager |
+| wob | `configs/wob.ini` | Volume/brightness overlay |
 
 ### XDG (Native Modules)
 
@@ -140,16 +143,6 @@ Managed by `programs.zsh` with:
 - **zsh-fzf-tab**: Fuzzy completion
 - **Autosuggestions**: Native module
 - **Syntax highlighting**: Native module
-
-## Legacy Stow Packages
-
-These directories are kept for specific use cases:
-
-| Package | Status | Notes |
-|---------|--------|-------|
-| `htop/` | Active | User preference |
-| `pcmanfm-qt/` | Active | File manager settings |
-| `wob/` | Active | Volume/brightness overlay |
 
 ## Useful Commands
 

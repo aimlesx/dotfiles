@@ -29,6 +29,18 @@
     ".config/code-flags.conf".source = ../configs/code-flags.conf;
     ".config/codium-flags.conf".source = ../configs/codium-flags.conf;
     ".config/chrome-flags.conf".source = ../configs/chrome-flags.conf;
+
+    # Htop
+    ".config/htop/htoprc".source = ../configs/htoprc;
+
+    # PCManFM-Qt file manager
+    ".config/pcmanfm-qt" = {
+      source = ../configs/pcmanfm-qt;
+      recursive = true;
+    };
+
+    # Wob (Wayland overlay bar)
+    ".config/wob/wob.ini".source = ../configs/wob.ini;
   };
 }
 

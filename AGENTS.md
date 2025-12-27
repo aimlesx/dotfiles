@@ -1,10 +1,10 @@
 # Dotfiles Repository
 
-Personal configuration files managed with [Nix Home Manager](https://github.com/nix-community/home-manager) (primary) and [GNU Stow](https://www.gnu.org/software/stow/) (legacy).
+Personal configuration files managed with [Nix Home Manager](https://github.com/nix-community/home-manager).
 
 ## Structure
 
-The active configuration is in `nix/`. Legacy stow packages remain in top-level directories but are deprecated.
+All configuration is in `nix/`.
 
 ### Nix Home Manager (Active)
 
@@ -60,6 +60,9 @@ These are now managed by Home Manager:
 | `git` | programs.git | Native module |
 | `ssh` | programs.ssh | Native module |
 | `gpg` | programs.gpg + services.gpg-agent | Native module |
+| `htop` | home.file | `nix/configs/htoprc` |
+| `pcmanfm-qt` | home.file (recursive) | `nix/configs/pcmanfm-qt/` |
+| `wob` | home.file | `nix/configs/wob.ini` |
 
 ## Native Program Modules
 
@@ -80,26 +83,6 @@ These use Home Manager's native modules with shell integration:
 - `services.gpg-agent` - GPG agent with pinentry
 - `xdg.mimeApps` - Default applications
 - `xdg.userDirs` - XDG user directories
-
-## Legacy Stow Packages (Not Migrated)
-
-These remain as stow packages and are actively used:
-
-| Package | Description |
-|---------|-------------|
-| `htop` | Process viewer (user preference) |
-| `pcmanfm-qt` | File manager settings |
-| `wob` | Wayland overlay bar for volume/brightness |
-
-## Legacy Stow Usage
-
-```bash
-# Deploy a legacy package
-stow <package>
-
-# Remove a package
-stow -D <package>
-```
 
 ## Key Commands
 
