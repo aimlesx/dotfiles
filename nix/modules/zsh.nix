@@ -1,10 +1,10 @@
 # Zsh shell configuration
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.home.homeDirectory}/.config/zsh";
 
     # Enable shell integrations
     autosuggestion.enable = true;
