@@ -8,6 +8,7 @@
     ./modules/terminal.nix
     ./modules/editor.nix
     ./modules/desktop.nix
+    ./modules/zsh.nix
   ];
 
   home.username = "aimless";
