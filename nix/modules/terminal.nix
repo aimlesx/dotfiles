@@ -1,9 +1,10 @@
 # Kitty terminal configuration
-{ ... }:
+{ config, pkgs, ... }:
 
 {
   programs.kitty = {
     enable = true;
+    package = config.lib.nixGL.wrap pkgs.kitty;
     font = {
       name = "JetBrainsMono Nerd Font Mono";
       size = 18;

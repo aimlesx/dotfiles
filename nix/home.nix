@@ -1,5 +1,5 @@
 # Home Manager configuration
-{ config, pkgs, ... }:
+{ config, pkgs, nixgl, ... }:
 
 {
   imports = [
@@ -17,6 +17,13 @@
   home.username = "aimless";
   home.homeDirectory = "/home/aimless";
   home.stateVersion = "24.11";
+
+  # NixGL for OpenGL/GPU support on non-NixOS
+  targets.genericLinux.nixGL = {
+    packages = nixgl.packages;
+    defaultWrapper = "mesa";
+    installScripts = [ "mesa" ];
+  };
 
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
