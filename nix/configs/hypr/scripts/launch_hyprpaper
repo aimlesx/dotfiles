@@ -8,12 +8,18 @@ if [[ -z "$WALLPAPER" ]]; then
     exit 1
 fi
 
-# Generate hyprpaper config
+# Generate hyprpaper config (preload no longer required in newer versions)
 cat > ~/.config/hypr/hyprpaper.conf << EOF
-preload = $WALLPAPER
 wallpaper = ,$WALLPAPER
 EOF
 
-pkill -x hyprpaper
-hyprpaper &
+# Check if hyprpaper is running
+if ! pgrep -x hyprpaper > /dev/null; then
+    hyprpaper &
+    sleep 1
+fi
+
+# Set wallpaper via IPC (more reliable than config reload)
+hyprctl hyprpaper wallpaper ",$WALLPAPER"
+
 notify-send "Wallpaper set" "$(basename "$WALLPAPER")"
